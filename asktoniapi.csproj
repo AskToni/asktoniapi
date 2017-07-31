@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <UserSecretsId>b8f17693-8f09-4ae6-b2ca-a3fa6a581037</UserSecretsId>
+  </PropertyGroup>
+
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
@@ -17,6 +21,11 @@
     <PackageReference Include="MongoDB.Driver" Version="2.4.4"/>
     <PackageReference Include="MongoDB.Driver.Core" version="2.4.4" />
     <PackageReference Include="MongoDB.Bson" version="2.4.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.1" />
   </ItemGroup>
 
 </Project>
