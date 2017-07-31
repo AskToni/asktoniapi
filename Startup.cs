@@ -22,6 +22,12 @@ namespace asktoniapi
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+
             Configuration = builder.Build();
         }
 
@@ -30,6 +36,9 @@ namespace asktoniapi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Bind Db Connection Keys
+            services.Configure<DbConnectionConfig>(keys => Configuration.Bind(keys));
+
             // Add framework services.
             services.AddDbContext<AskToniContext>(opt => opt.UseInMemoryDatabase());
             services.AddMvc();
