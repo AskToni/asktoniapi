@@ -30,14 +30,18 @@ namespace asktoniapi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
-            services.AddDbContext<AskToniContext>(opt => opt.UseInMemoryDatabase());
+            services.AddTransient<IRecommendationRepository, RecommendationRepository>();
+
+            services.AddCors(options => { options.AddPolicy("CorsPolicy", 
+                                      builder => builder.AllowAnyOrigin() 
+                                                        .AllowAnyMethod() 
+                                                        .AllowAnyHeader() 
+                                                        .AllowCredentials()); 
+                                  }); 
+
             services.AddMvc();
 
             services.AddLogging();
-
-            // Add our repository type
-            services.AddSingleton<AskToniContext, AskToniContext>();
 
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -52,6 +56,8 @@ namespace asktoniapi
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseCors("CorsPolicy"); 
 
             app.UseMvc();
 
