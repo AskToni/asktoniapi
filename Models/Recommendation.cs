@@ -9,10 +9,13 @@ namespace AskToniApi.Models
         [BsonId]
         public long Id { get; set; }
 
+        [BsonElement("RestaurantName")]
         public string RestaurantName { get; set; }
 
+        [BsonElement("Address")]
         public string Address { get; set; }
         
+        [BsonElement("Website")]
         public string Website { get; set; }
     }
 }

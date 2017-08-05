@@ -19,10 +19,10 @@ namespace AskToniApi.Controllers
         [HttpGet]
         public Task<IEnumerable<Recommendation>> Get()
         {
-            return GetRecommendationInternal();
+            return GetRecommendations();
         }
 
-        private async Task<IEnumerable<Recommendation>> GetRecommendationInternal()
+        private async Task<IEnumerable<Recommendation>> GetRecommendations()
         {
             return await _recommendationRepository.GetAllRecommendations();
         }
@@ -57,6 +57,7 @@ namespace AskToniApi.Controllers
         }
 
         // DELETE api/recommendation/5
+        [HttpDelete("{id}")]
         public void Delete(string id)
         {
             _recommendationRepository.RemoveRecommendation(id);

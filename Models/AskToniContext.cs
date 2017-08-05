@@ -14,7 +14,7 @@ namespace AskToniApi.Models
         public AskToniContext()
         {
             try {
-                _client = new MongoClient("mongodb://admin:Vv33T12Rt@cluster0-shard-00-00-d8sqa.mongodb.net:27017,cluster0-shard-00-01-d8sqa.mongodb.net:27017,cluster0-shard-00-02-d8sqa.mongodb.net:27017/<DATABASE>?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin");
+                _client = new MongoClient("mongodb://admin:Vv33T$Rt@ds034677.mlab.com:34677/asktonidb");
                 _db = _client.GetDatabase("asktonidb"); 
             } catch (Exception ex) {
                 throw ex;
