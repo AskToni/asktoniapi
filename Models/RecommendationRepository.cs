@@ -10,9 +10,10 @@ public class RecommendationRepository : IRecommendationRepository
 {
     private readonly AskToniContext _context = null;
 
-    public RecommendationRepository()
+    public RecommendationRepository(IOptions<DbConnectionConfig> dbConnectionConfig)
     {
-        _context = new AskToniContext();
+        DbConnectionConfig _dbConnectionConfig = dbConnectionConfig.Value;
+        _context = new AskToniContext(_dbConnectionConfig.mLabConnectStr);
     }
 
     public async Task<IEnumerable<Recommendation>> GetAllRecommendations()

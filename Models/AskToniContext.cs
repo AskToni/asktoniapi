@@ -11,10 +11,10 @@ namespace AskToniApi.Models
         private readonly MongoClient _client;
         private readonly IMongoDatabase _db = null;
 
-        public AskToniContext()
+        public AskToniContext(string dbConnectionString)
         {
             try {
-                _client = new MongoClient("mongodb://admin:Vv33T$Rt@ds034677.mlab.com:34677/asktonidb");
+                _client = new MongoClient(dbConnectionString);
                 _db = _client.GetDatabase("asktonidb"); 
             } catch (Exception ex) {
                 throw ex;

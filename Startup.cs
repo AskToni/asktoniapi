@@ -23,7 +23,7 @@ namespace asktoniapi
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
-            if (env.IsDevelopment())
+            if (env.EnvironmentName == "Development")
             {
                 builder.AddUserSecrets<Startup>();
             }
@@ -45,11 +45,10 @@ namespace asktoniapi
                                                         .AllowCredentials()); 
                                   }); 
 
-            //Bind Db Connection Keys
+            //Bind DbConnection Keys
             services.Configure<DbConnectionConfig>(keys => Configuration.Bind(keys));
 
             // Add framework services.
-            services.AddDbContext<AskToniContext>(opt => opt.UseInMemoryDatabase());
             services.AddMvc();
 
             services.AddLogging();
