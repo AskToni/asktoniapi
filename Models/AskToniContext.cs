@@ -11,6 +11,9 @@ namespace AskToniApi.Models
         private readonly MongoClient _client;
         private readonly IMongoDatabase _db = null;
 
+        public AskToniContext() {
+            
+        }
         public AskToniContext(string dbConnectionString)
         {
             try {
