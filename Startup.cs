@@ -36,7 +36,6 @@ namespace asktoniapi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-<<<<<<< HEAD
             services.AddTransient<IRecommendationRepository, RecommendationRepository>();
 
             services.AddCors(options => { options.AddPolicy("CorsPolicy", 
@@ -47,9 +46,6 @@ namespace asktoniapi
                                   }); 
 
             //Bind DbConnection Keys
-=======
-            //Bind Db Connection Keys
->>>>>>> origin/dbsettings
             services.Configure<DbConnectionConfig>(keys => Configuration.Bind(keys));
 
             // Add framework services.
