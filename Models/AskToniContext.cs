@@ -24,11 +24,11 @@ namespace AskToniApi.Models
             }  
         }
 
-        public IMongoCollection<Recommendation> Recommendations
+        public IMongoCollection<Restaurant> Recommendations
         {
             get
             {
-                return _db.GetCollection<Recommendation>("restaurants");
+                return _db.GetCollection<Restaurant>("restaurants");
             }
         }
     }

@@ -16,7 +16,7 @@ public class RecommendationRepository : IRecommendationRepository
         _context = new AskToniContext(_dbConnectionConfig.mLabConnectStr);
     }
 
-    public async Task<IEnumerable<Recommendation>> GetAllRecommendations()
+    public async Task<IEnumerable<Restaurant>> GetAllRestaurants()
     {
         try {
             return await _context.Recommendations.Find(_ => true).ToListAsync();
@@ -26,35 +26,32 @@ public class RecommendationRepository : IRecommendationRepository
         }
     }
 
-    public async Task<Recommendation> GetRecommendation(string id)
+    public async Task<Restaurant> GetRestaurant(string id)
     {
-        var filter = Builders<Recommendation>.Filter.Eq("Id", id);
+        var filter = Builders<Restaurant>.Filter.Eq(r => r.Id, ObjectId.Parse(id));
         return await _context.Recommendations
                              .Find(filter)
                              .FirstOrDefaultAsync();
     }
 
-    public async Task AddRecommendation(Recommendation item)
+    public async Task AddRestaurant(Restaurant item)
     {
         await _context.Recommendations.InsertOneAsync(item);
     }
 
-    public async Task<DeleteResult> RemoveRecommendation(string id)
+    public async Task<DeleteResult> RemoveRestaurant(string id)
     {
         return await _context.Recommendations.DeleteOneAsync(
-                     Builders<Recommendation>.Filter.Eq("Id", id));
+                     Builders<Restaurant>.Filter.Eq(r => r.Id, ObjectId.Parse(id)));
     }
    
-    public async Task<ReplaceOneResult> UpdateRecommendation(string id, Recommendation item)
+    public async Task<ReplaceOneResult> UpdateRestaurant(string id, Restaurant item)
     {
-        return await _context.Recommendations
-                             .ReplaceOneAsync(n => n.Id.Equals(id)
-                                                 , item
-                                                 , new UpdateOptions { IsUpsert = true });
-    }
+        item.Id = ObjectId.Parse(id);
 
-    public async Task<DeleteResult> RemoveAllRecommendations()
-    {
-        return await _context.Recommendations.DeleteManyAsync(new BsonDocument());
+        return await _context.Recommendations
+                             .ReplaceOneAsync(r => r.Id.Equals(ObjectId.Parse(id)),
+                                             item,
+                                             new UpdateOptions { IsUpsert = true });
     }
 }
