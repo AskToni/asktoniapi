@@ -45,7 +45,7 @@ namespace AskToniApi.Controllers
         {
             _recommendationRepository.AddRecommendation(new Recommendation() 
                                     { RestaurantName = value.RestaurantName, 
-                                    Website = value.Website, 
+                                    //Website = value.Website, 
                                     Address = value.Address });
         }
 

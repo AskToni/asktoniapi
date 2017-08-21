@@ -12,13 +12,23 @@ namespace AskToniApi.Models
         private readonly IMongoDatabase _db = null;
 
         public AskToniContext() {
-            
+            try {
+                _client = new MongoClient("mongodb://admin:Vv33T$Rt@ds034677.mlab.com:34677/asktonidb");
+                if (_client != null) {
+                    _db = _client.GetDatabase("asktonidb"); 
+                }
+                
+            } catch (Exception ex) {
+                throw ex;
+            }  
         }
         public AskToniContext(string dbConnectionString)
         {
             try {
                 _client = new MongoClient(dbConnectionString);
-                _db = _client.GetDatabase("asktonidb"); 
+                if(_client != null) {
+                    _db = _client.GetDatabase("asktonidb"); 
+                }
             } catch (Exception ex) {
                 throw ex;
             }  
