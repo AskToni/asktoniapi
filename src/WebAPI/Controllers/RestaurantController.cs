@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 namespace AskToniApi.Controllers
 {
     [Route("api/[controller]")]
-    public class RecommendationController : Controller
+    public class RestaurantController : Controller
     {
         private readonly IRecommendationRepository _recommendationRepository;
-        public RecommendationController(IRecommendationRepository recommendationRepository)
+        public RestaurantController(IRecommendationRepository recommendationRepository)
         {
             _recommendationRepository = recommendationRepository;
         }
@@ -19,10 +19,10 @@ namespace AskToniApi.Controllers
         [HttpGet]
         public Task<IEnumerable<Restaurant>> Get()
         {
-            return GetRecommendations();
+            return GetRestaurants();
         }
 
-        private async Task<IEnumerable<Restaurant>> GetRecommendations()
+        private async Task<IEnumerable<Restaurant>> GetRestaurants()
         {
             return await _recommendationRepository.GetAllRestaurants();
         }
@@ -31,20 +31,21 @@ namespace AskToniApi.Controllers
         [HttpGet("{id}")]
         public Task<Restaurant> Get(string id)
         {
-            return GetRecommendationByIdInternal(id);
+            return GetRestaurantByIdInternal(id);
         }
 
-        private async Task<Restaurant> GetRecommendationByIdInternal(string id)
+        private async Task<Restaurant> GetRestaurantByIdInternal(string id)
         {
             return await _recommendationRepository.GetRestaurant(id) ?? new Restaurant();
         }
 
-        // POST api/recommendation
+        // POST api/restaurant
         [HttpPost]
         public void Post([FromBody]Restaurant value)
         {
             _recommendationRepository.AddRestaurant(new Restaurant() 
-                                    { RestaurantName = value.RestaurantName, 
+                                    { RestaurantName = value.RestaurantName,
+                                    RestaurantId = value.RestaurantId, 
                                     ReviewCount = value.ReviewCount, 
                                     Rating = value.Rating, 
                                     Price = value.Price,
@@ -52,17 +53,18 @@ namespace AskToniApi.Controllers
                                     City = value.City,
                                     ZipCode = value.ZipCode,
                                     Phone = value.Phone,
-                                    Categories = value.Categories});
+                                    Categories = value.Categories,
+                                    ReviewIDs = value.ReviewIDs});
         }
 
-        // PUT api/recommendation/ObjectId
+        // PUT api/restaurant/ObjectId
         [HttpPut("{id}")]
         public void Put(string id, [FromBody]Restaurant value)
         {
             _recommendationRepository.UpdateRestaurant(id, value);
         }
 
-        // DELETE api/recommendation/ObjectId
+        // DELETE api/restaurant/ObjectId
         [HttpDelete("{id}")]
         public void Delete(string id)
         {

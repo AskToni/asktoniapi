@@ -1,6 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace AskToniApi.Models
 {
@@ -37,6 +38,9 @@ namespace AskToniApi.Models
         public string Phone { get; set;}
         
         [BsonElement("Categories")]
-        public string[] Categories {get; set;}
+        public List<string> Categories {get; set;}
+
+        [BsonElement("ReviewIDs")]
+        public List<string> ReviewIDs { get; set;}
     }
 }
