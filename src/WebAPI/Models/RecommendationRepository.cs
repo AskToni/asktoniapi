@@ -54,4 +54,43 @@ public class RecommendationRepository : IRecommendationRepository
                                              item,
                                              new UpdateOptions { IsUpsert = true });
     }
+
+        public async Task<IEnumerable<Review>> GetAllReviews()
+    {
+        try {
+            return await _context.Reviews.Find(_ => true).ToListAsync();
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public async Task<Review> GetReview(string id)
+    {
+        var filter = Builders<Review>.Filter.Eq(r => r.Id, ObjectId.Parse(id));
+        return await _context.Reviews
+                             .Find(filter)
+                             .FirstOrDefaultAsync();
+    }
+
+    public async Task AddReview(Review item)
+    {
+        await _context.Reviews.InsertOneAsync(item);
+    }
+
+    public async Task<DeleteResult> RemoveReview(string id)
+    {
+        return await _context.Reviews.DeleteOneAsync(
+                     Builders<Review>.Filter.Eq(r => r.Id, ObjectId.Parse(id)));
+    }
+   
+    public async Task<ReplaceOneResult> UpdateReview(string id, Review item)
+    {
+        item.Id = ObjectId.Parse(id);
+
+        return await _context.Reviews
+                             .ReplaceOneAsync(r => r.Id.Equals(ObjectId.Parse(id)),
+                                             item,
+                                             new UpdateOptions { IsUpsert = true });
+    }
 }
