@@ -6,7 +6,6 @@ using Xunit;
 using Moq;
 using AskToniApi.Controllers;
 using AskToniApi.Models;
-using TestsCore;
 
 namespace AskToniApi.UnitTests.Controllers
 {
