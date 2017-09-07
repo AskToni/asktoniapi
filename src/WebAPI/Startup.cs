@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using AskToniApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace asktoniapi
+namespace AskToniApi
 {
     public class Startup
     {
