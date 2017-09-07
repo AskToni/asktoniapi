@@ -5,7 +5,6 @@ Test Projects and File Structure
 Integration Tests:
 UnitTests:
 
-
 References
 ----------
 For unit testing, this is the [main guide][1] initially followed.
