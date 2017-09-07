@@ -4,8 +4,7 @@ Test Projects and File Structure
 --------------------------------
 Integration Tests:
 UnitTests:
-TestsCore: This contains useful classes for testing
-* TestingObject.cs : A wrapper class for mocks with dependancies, see [1]
+
 
 References
 ----------
