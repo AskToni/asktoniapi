@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 
-namespace asktoniapi
+namespace AskToniApi
 {
     public class Program
     {
