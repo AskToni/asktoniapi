@@ -12,11 +12,11 @@ using Xunit;
 
 namespace AskToniApi.IntegrationTests.Controllers
 {
-    public class RecommendationControllerIntegTests : IClassFixture<TestFixture<AskToniApi.Startup>>
+    public class RestaurantControllerIntegTests : IClassFixture<TestFixture<AskToniApi.Startup>>
     {
         private readonly HttpClient _client;
 
-        public RecommendationControllerIntegTests(TestFixture<AskToniApi.Startup> fixture)
+        public RestaurantControllerIntegTests(TestFixture<AskToniApi.Startup> fixture)
         {
             _client = fixture.Client;
         }

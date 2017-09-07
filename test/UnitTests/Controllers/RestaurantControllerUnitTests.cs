@@ -10,7 +10,7 @@ using TestsCore;
 
 namespace AskToniApi.UnitTests.Controllers
 {
-    public class RecommendationControllerUnitTests
+    public class RestaurantControllerUnitTests
     {
         [Fact]
         public void Get_Success_ReturnsCorrectResult()
@@ -25,7 +25,7 @@ namespace AskToniApi.UnitTests.Controllers
                                     );
             mockRecommendationRepository.Setup(d => d.GetAllRestaurants()).ReturnsAsync(restaurantCollection);
 
-            var recommendationController = new RecommendationController(mockRecommendationRepository.Object);
+            var recommendationController = new RestaurantController(mockRecommendationRepository.Object);
             var result = recommendationController.Get();
             Assert.Equal("testName",result.Result.First().RestaurantName);
         }
