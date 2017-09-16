@@ -26,6 +26,16 @@ public class RecommendationRepository : IRecommendationRepository
         }
     }
 
+    public async Task<IEnumerable<Restaurant>> GetRestaurantsUsingFilter(int pageOffset, int pageLimit)
+    {
+        try {
+            return await _context.Recommendations.Find(_ => true).Skip(pageOffset*pageLimit).Limit(pageLimit).ToListAsync();
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
+    }
+
     public async Task<Restaurant> GetRestaurant(string id)
     {
         var filter = Builders<Restaurant>.Filter.Eq(r => r.Id, ObjectId.Parse(id));
