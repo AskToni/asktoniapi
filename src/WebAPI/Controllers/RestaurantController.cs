@@ -16,15 +16,20 @@ namespace AskToniApi.Controllers
             _recommendationRepository = recommendationRepository;
         }
 
+
         [HttpGet]
-        public Task<IEnumerable<Restaurant>> Get()
+        public Task<IEnumerable<Restaurant>> Get(int pageOffset, int pageLimit)
         {
-            return GetRestaurants();
+            return GetRestaurants(pageOffset, pageLimit);
         }
 
-        private async Task<IEnumerable<Restaurant>> GetRestaurants()
+        private async Task<IEnumerable<Restaurant>> GetRestaurants(int pageOffset, int pageLimit)
         {
-            return await _recommendationRepository.GetAllRestaurants();
+            if (pageOffset > 0 && pageLimit > 0) {
+                return await _recommendationRepository.GetRestaurantsUsingFilter(pageOffset, pageLimit);
+            } else {
+                return await _recommendationRepository.GetAllRestaurants();
+            }
         }
 
         // GET api/restaurant/ObjectId

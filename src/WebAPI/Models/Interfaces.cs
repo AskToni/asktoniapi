@@ -7,6 +7,7 @@ public interface IRecommendationRepository
 {
     // Restaurants
     Task<IEnumerable<Restaurant>> GetAllRestaurants();
+    Task<IEnumerable<Restaurant>> GetRestaurantsUsingFilter(int pageOffset, int pageLimit);
     Task<Restaurant> GetRestaurant(string id);
     Task AddRestaurant(Restaurant item);
     Task<DeleteResult> RemoveRestaurant(string id);
