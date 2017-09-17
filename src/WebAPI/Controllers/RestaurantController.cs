@@ -25,7 +25,7 @@ namespace AskToniApi.Controllers
 
         private async Task<IEnumerable<Restaurant>> GetRestaurants(int pageOffset, int pageLimit)
         {
-            if (pageOffset != 0 || pageLimit != 0) {
+            if (pageOffset > 0 && pageLimit > 0) {
                 return await _recommendationRepository.GetRestaurantsUsingFilter(pageOffset, pageLimit);
             } else {
                 return await _recommendationRepository.GetAllRestaurants();
