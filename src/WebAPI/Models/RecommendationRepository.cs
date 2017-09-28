@@ -38,7 +38,7 @@ public class RecommendationRepository : IRecommendationRepository
 
     public async Task<Restaurant> GetRestaurant(string id)
     {
-        var filter = Builders<Restaurant>.Filter.Eq(r => r.Id, ObjectId.Parse(id));
+        var filter = Builders<Restaurant>.Filter.Eq(r => r.Id, id);
         return await _context.Recommendations
                              .Find(filter)
                              .FirstOrDefaultAsync();
@@ -52,12 +52,12 @@ public class RecommendationRepository : IRecommendationRepository
     public async Task<DeleteResult> RemoveRestaurant(string id)
     {
         return await _context.Recommendations.DeleteOneAsync(
-                     Builders<Restaurant>.Filter.Eq(r => r.Id, ObjectId.Parse(id)));
+                     Builders<Restaurant>.Filter.Eq(r => r.Id, id));
     }
    
     public async Task<ReplaceOneResult> UpdateRestaurant(string id, Restaurant item)
     {
-        item.Id = ObjectId.Parse(id);
+        item.Id = id;
 
         return await _context.Recommendations
                              .ReplaceOneAsync(r => r.Id.Equals(ObjectId.Parse(id)),
@@ -77,7 +77,7 @@ public class RecommendationRepository : IRecommendationRepository
 
     public async Task<Review> GetReview(string id)
     {
-        var filter = Builders<Review>.Filter.Eq(r => r.Id, ObjectId.Parse(id));
+        var filter = Builders<Review>.Filter.Eq(r => r.Id, id);
         return await _context.Reviews
                              .Find(filter)
                              .FirstOrDefaultAsync();
@@ -91,12 +91,12 @@ public class RecommendationRepository : IRecommendationRepository
     public async Task<DeleteResult> RemoveReview(string id)
     {
         return await _context.Reviews.DeleteOneAsync(
-                     Builders<Review>.Filter.Eq(r => r.Id, ObjectId.Parse(id)));
+                     Builders<Review>.Filter.Eq(r => r.Id, id));
     }
    
     public async Task<ReplaceOneResult> UpdateReview(string id, Review item)
     {
-        item.Id = ObjectId.Parse(id);
+        item.Id = id;
 
         return await _context.Reviews
                              .ReplaceOneAsync(r => r.Id.Equals(ObjectId.Parse(id)),

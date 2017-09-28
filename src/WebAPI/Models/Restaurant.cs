@@ -8,7 +8,8 @@ namespace AskToniApi.Models
     public class Restaurant
     {
         [BsonId]
-        public ObjectId Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
         [BsonElement("RestaurantId")]
         public string RestaurantId { get; set;}

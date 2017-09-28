@@ -11,8 +11,9 @@ namespace AskToniApi.UnitTests.Controllers
 {
     public class RestaurantControllerUnitTests
     {
-        [Fact]
-        public void Get_Success_ReturnsCorrectResult()
+        [Theory,
+        InlineData(0,1)]
+        public void Get_Success_ReturnsCorrectResult(int pageOffset, int pageLimit)
         {
             var mockRecommendationRepository = new Mock<IRecommendationRepository>();
             var restaurantCollection = new List<Restaurant>();
@@ -24,8 +25,8 @@ namespace AskToniApi.UnitTests.Controllers
                                     );
             mockRecommendationRepository.Setup(d => d.GetAllRestaurants()).ReturnsAsync(restaurantCollection);
 
-            var recommendationController = new RestaurantController(mockRecommendationRepository.Object);
-            var result = recommendationController.Get();
+            var restaurantController = new RestaurantController(mockRecommendationRepository.Object);
+            var result = restaurantController.Get(pageOffset,pageLimit);
             Assert.Equal("testName",result.Result.First().RestaurantName);
         }
     }

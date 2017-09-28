@@ -5,7 +5,8 @@ using MongoDB.Bson.Serialization.Attributes;
 public class Review
 {
     [BsonId]
-    public ObjectId Id { get; set; }
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; }
     [BsonElement("RestaurantId")]
     public string RestaurantId {get; set;}
     [BsonElement("Text")]
