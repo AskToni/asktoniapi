@@ -21,3 +21,31 @@ public interface IRecommendationRepository
     Task<ReplaceOneResult> UpdateReview(string id, Review item);
 
 }
+
+public interface IVisitRepository
+{
+    Task<IEnumerable<Visit>> GetAllVisitsToARestaurant(string restaurantMongoId, int pageOffset, int pageLimit);
+
+    Task<IEnumerable<Visit>> GetAllVisitsToARestaurant(string restaurantMongoId);
+
+    Task<IEnumerable<Visit>> GetAllVisits();
+
+    Task<IEnumerable<Visit>> GetVisitsUsingFilter(int pageOffset, int pageLimit);
+
+    Task<Visit> GetVisit(string id);
+
+    Task AddVisit(Visit item);
+
+    Task<DeleteResult> RemoveVisit(string id);
+
+    Task<ReplaceOneResult> UpdateVisit(string id, Visit item);
+
+    Task AddUserToVisit(string userId, string visitId);
+}
+
+public interface IUserRepository
+{
+    Task<IEnumerable<User>> GetAllUsers();
+
+    Task AddUser(User item);
+}
