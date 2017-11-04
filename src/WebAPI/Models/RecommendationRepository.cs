@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using Microsoft.Extensions.Options;
+using MongoDB.Driver.Linq;
+using GeoCoordinatePortable;
 
 public class RecommendationRepository : IRecommendationRepository
 {
@@ -103,4 +105,27 @@ public class RecommendationRepository : IRecommendationRepository
                                              item,
                                              new UpdateOptions { IsUpsert = true });
     }
+
+    public async Task<IEnumerable<Restaurant>> GetRecommendation(double latitude, double longitude, string category)
+    {
+        var filter = Builders<Restaurant>.Filter.AnyEq(r => r.Categories, category);
+        var relatedRestaurants = await _context.Recommendations.Find(filter).ToListAsync();
+
+        GeoCoordinate userLocation = new GeoCoordinate(latitude,longitude);
+        List<Restaurant> recommendationResults = new List<Restaurant>();
+        double distanceFromUserLocationInKm = 0.0;
+        double distanceThreshold = 5.0;
+
+        foreach (Restaurant r in relatedRestaurants) {
+            distanceFromUserLocationInKm = userLocation.GetDistanceTo(new GeoCoordinate(r.Latitude, r.Longitude)) / 1000;
+
+            if (distanceFromUserLocationInKm < distanceThreshold) {
+                recommendationResults.Add(r);
+            }
+        }
+
+        return recommendationResults;
+                             
+    }
+
 }
