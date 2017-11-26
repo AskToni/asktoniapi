@@ -19,5 +19,6 @@ public interface IRecommendationRepository
     Task AddReview(Review item);
     Task<DeleteResult> RemoveReview(string id);
     Task<ReplaceOneResult> UpdateReview(string id, Review item);
+    Task<IEnumerable<Restaurant>> GetRecommendations(double latitude, double longitude, string category, int pageOffset, int pageLimit, int sort);
 
 }
