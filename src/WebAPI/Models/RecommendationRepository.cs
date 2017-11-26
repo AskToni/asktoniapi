@@ -106,10 +106,16 @@ public class RecommendationRepository : IRecommendationRepository
                                              new UpdateOptions { IsUpsert = true });
     }
 
-    public async Task<IEnumerable<Restaurant>> GetRecommendation(double latitude, double longitude, string category)
+    public async Task<IEnumerable<Restaurant>> GetRecommendations(double latitude, double longitude, string category, int pageOffset, int pageLimit, int sort)
     {
         var filter = Builders<Restaurant>.Filter.AnyEq(r => r.Categories, category);
-        var relatedRestaurants = await _context.Recommendations.Find(filter).ToListAsync();
+        List<Restaurant> relatedRestaurants = null;
+
+        if (pageOffset >= 0 && pageLimit > 0) {
+            relatedRestaurants = await _context.Recommendations.Find(filter).Skip(pageOffset*pageLimit).Limit(pageLimit).Sort("{RestaurantName: " + sort + "}").ToListAsync();
+        } else {
+            relatedRestaurants = await _context.Recommendations.Find(filter).Sort("{RestaurantName: " + sort + "}").ToListAsync();
+        }
 
         GeoCoordinate userLocation = new GeoCoordinate(latitude,longitude);
         List<Restaurant> recommendationResults = new List<Restaurant>();
@@ -124,8 +130,7 @@ public class RecommendationRepository : IRecommendationRepository
             }
         }
 
-        return recommendationResults;
-                             
+        return recommendationResults;                         
     }
 
 }

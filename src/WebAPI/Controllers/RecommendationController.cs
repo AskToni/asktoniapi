@@ -17,14 +17,14 @@ namespace AskToniApi.Controllers
         }
 
         [HttpGet]
-        public Task<IEnumerable<Restaurant>> Get(double latitude, double longitude, string category)
+        public Task<IEnumerable<Restaurant>> Get(double latitude, double longitude, string category, int pageOffset, int pageLimit, int sort = 1)
         {
-            return GetRecommendation(latitude, longitude, category);
+            return GetRecommendations(latitude, longitude, category, pageOffset, pageLimit, sort);
         }
 
-        private async Task<IEnumerable<Restaurant>> GetRecommendation(double latitude, double longitude, string category)
+        private async Task<IEnumerable<Restaurant>> GetRecommendations(double latitude, double longitude, string category, int pageOffset, int pageLimit, int sort)
         {
-            return await _recommendationRepository.GetRecommendation(latitude, longitude, category);
+            return await _recommendationRepository.GetRecommendations(latitude, longitude, category, pageOffset, pageLimit, sort);
         }
 
     }
