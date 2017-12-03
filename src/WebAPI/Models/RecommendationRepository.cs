@@ -133,4 +133,12 @@ public class RecommendationRepository : IRecommendationRepository
         return recommendationResults;                         
     }
 
+    public async Task<IEnumerable<string>> GetRecommendationCategories() 
+    {
+        var categories = await _context.Recommendations.DistinctAsync<string>("Categories", Builders<Restaurant>.Filter.Empty);
+
+        return categories.ToList();
+
+    }
+
 }
