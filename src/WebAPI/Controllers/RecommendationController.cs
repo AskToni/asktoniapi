@@ -27,7 +27,7 @@ namespace AskToniApi.Controllers
             return await _recommendationRepository.GetRecommendations(latitude, longitude, category, pageOffset, pageLimit, sort);
         }
 
-        [HttpGet("/api/Recommendation/categories")]
+        [HttpGet("/api/Recommendation/Categories")]
         public Task<IEnumerable<string>> GetCategories()
         {
             return GetRecommendationCategories();
