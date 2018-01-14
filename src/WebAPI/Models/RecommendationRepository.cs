@@ -18,6 +18,8 @@ public class RecommendationRepository : IRecommendationRepository
         _context = new AskToniContext(_dbConnectionConfig.mLabConnectStr);
     }
 
+    #region Restaurants
+
     public async Task<IEnumerable<Restaurant>> GetAllRestaurants()
     {
         try {
@@ -77,6 +79,10 @@ public class RecommendationRepository : IRecommendationRepository
         }
     }
 
+    #endregion
+
+    #region Reviews
+
     public async Task<Review> GetReview(string id)
     {
         var filter = Builders<Review>.Filter.Eq(r => r.Id, id);
@@ -105,6 +111,10 @@ public class RecommendationRepository : IRecommendationRepository
                                              item,
                                              new UpdateOptions { IsUpsert = true });
     }
+
+    #endregion Reviews
+
+    #region Recommendations
 
     public async Task<IEnumerable<Restaurant>> GetRecommendations(double latitude, double longitude, string category, int pageOffset, int pageLimit, int sort)
     {
@@ -140,5 +150,93 @@ public class RecommendationRepository : IRecommendationRepository
         return categories.ToList();
 
     }
+
+    #endregion Recommendations
+
+    #region UserProfiles
+
+    public async Task<UserProfile> GetUserProfile(string id)
+    {
+        var filter = Builders<UserProfile>.Filter.Eq(r => r.Id, id);
+        return await _context.UserProfiles
+                             .Find(filter)
+                             .FirstOrDefaultAsync();
+    }
+
+    public async Task<IEnumerable<UserProfile>> GetAllUserProfiles()
+    {
+        try {
+            return await _context.UserProfiles.Find(_ => true).ToListAsync();
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public async Task AddUserProfile(UserProfile item)
+    {
+        await _context.UserProfiles.InsertOneAsync(item);
+    }
+
+    public async Task<DeleteResult> RemoveUserProfile(string id)
+    {
+        return await _context.UserProfiles.DeleteOneAsync(
+                     Builders<UserProfile>.Filter.Eq(r => r.Id, id));
+    }
+   
+    public async Task<ReplaceOneResult> UpdateUserProfile(string id, UserProfile item)
+    {
+        item.Id = id;
+
+        return await _context.UserProfiles
+                             .ReplaceOneAsync(r => r.Id.Equals(ObjectId.Parse(id)),
+                                             item,
+                                             new UpdateOptions { IsUpsert = true });
+    }
+
+    #endregion
+
+    #region UserVisit
+
+    public async Task<UserVisit> GetUserVisit(string id)
+    {
+        var filter = Builders<UserVisit>.Filter.Eq(r => r.Id, id);
+        return await _context.UserVisits
+                             .Find(filter)
+                             .FirstOrDefaultAsync();
+    }
+
+    public async Task<IEnumerable<UserVisit>> GetAllUserVisits()
+    {
+        try {
+            return await _context.UserVisits.Find(_ => true).ToListAsync();
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public async Task AddUserVisit(UserVisit item)
+    {
+        await _context.UserVisits.InsertOneAsync(item);
+    }
+
+    public async Task<DeleteResult> RemoveUserVisit(string id)
+    {
+        return await _context.UserVisits.DeleteOneAsync(
+                     Builders<UserVisit>.Filter.Eq(r => r.Id, id));
+    }
+   
+    public async Task<ReplaceOneResult> UpdateUserVisit(string id, UserVisit item)
+    {
+        item.Id = id;
+
+        return await _context.UserVisits
+                             .ReplaceOneAsync(r => r.Id.Equals(ObjectId.Parse(id)),
+                                             item,
+                                             new UpdateOptions { IsUpsert = true });
+    }
+
+    #endregion
 
 }

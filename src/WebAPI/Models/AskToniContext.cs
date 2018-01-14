@@ -39,5 +39,21 @@ namespace AskToniApi.Models
                 return _db.GetCollection<Review>("reviews");
             }
         }
+
+        public IMongoCollection<UserProfile> UserProfiles
+        {
+            get
+            {
+                return _db.GetCollection<UserProfile>("userprofiles");
+            }
+        }
+
+        public IMongoCollection<UserVisit> UserVisits
+        {
+            get
+            {
+                return _db.GetCollection<UserVisit>("uservisit");
+            }
+        }
     }
 }
